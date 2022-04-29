@@ -5,15 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class Track {
+public class Team {
 
-    private String trackName;
-    private Driver winner;
-    private LocalDate raceDate;
+    private String teamName;
+    private List<Driver> drivers;
+    private long budget;
+    private Engine engine;
 }
