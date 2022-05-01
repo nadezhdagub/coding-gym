@@ -1,13 +1,13 @@
 package workspace;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import data.formula.Championship;
 import data.formula.Driver;
+import data.formula.Team;
+import data.formula.Track;
 
 public class Lesson {
     public static void main(String[] args) {
@@ -85,6 +85,54 @@ public class Lesson {
                 .collect(Collectors.joining("\n"));
     }
 
+    public static List<Team> getConstructorChampionshipResults(Championship championship) {
+        // sort the teams by the number of points scored
+        return championship.getTeams().stream()
+                .sorted(Comparator.comparing(team -> team.getDrivers().stream()
+                        .mapToInt(Driver::getPoints)
+                        .sum())).collect(Collectors.toList());
+    }
 
+    public static String findAnyDriverFromCountry(String country) {
+        // find at least one rider from a given country, otherwise throw an exception
+        return null;
+    }
 
+    public static Map<String, Long> filterDriversWithSmallSalary(Championship championship) {
+        // leave only riders with a salary below 2m
+        // collect the name-salary in the map
+        // * option with TreeMap
+        return championship.getTeams().stream()
+                .flatMap(team -> team.getDrivers().stream())
+                .filter(driver -> driver.getSalary() < 2_000_000)
+                .collect(Collectors.toMap(Driver::getName, Driver::getSalary));
+    }
+
+    public static Team findAnyTeamWithEqualSalaries(Championship championship) {
+        // find any team in which the riders receive the same salary
+        return null;
+    }
+
+    public static String findMostWinsDriver(Championship championship) {
+        // find the rider with the most wins
+        // output the line "[driver_name] won [number of wins] times"
+        // in case of failure, throw an exception
+        return championship.getTrack()
+                .stream()
+                .collect(Collectors.groupingBy(Track::getWinner))
+                .entrySet().stream()
+                .max(Comparator.comparing(e -> e.getValue().size()))
+                .map(entry -> entry.getKey().getName() + " won " + entry.getValue().size() + " times")
+                .orElseThrow(() -> new RuntimeException("Sorry tou not a win"));
+    }
+
+    public static String getFibonacciSequence() {
+        // return the sequence of fibonacci numbers separated by commas, limit to 10 numbers
+        // original of the task https://mkyong.com/java/java-fibonacci-examples/
+        return Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(10)
+                .map(t -> t[0])
+                .map(String::valueOf) // convert to string
+                .collect(Collectors.joining(", "));
+    }
 }
