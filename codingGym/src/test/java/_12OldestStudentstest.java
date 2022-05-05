@@ -1,5 +1,3 @@
-package lab;
-
 import data.lab.Student;
 import org.junit.jupiter.api.Test;
 import workspace.previous.Main;
